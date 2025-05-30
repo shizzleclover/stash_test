@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'providers/auth_provider.dart';
 import 'providers/stash_provider.dart';
+import 'screens/splash_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/create_stash_screen.dart';
@@ -121,6 +122,8 @@ class AppWrapper extends StatefulWidget {
 }
 
 class _AppWrapperState extends State<AppWrapper> {
+  bool _showSplash = true;
+
   @override
   void initState() {
     super.initState();
@@ -128,71 +131,27 @@ class _AppWrapperState extends State<AppWrapper> {
   }
 
   void _initializeApp() async {
-    final authProvider = context.read<AuthProvider>();
-    await authProvider.initializeAuth();
+    // Show splash for at least 3 seconds
+    final futures = await Future.wait([
+      context.read<AuthProvider>().initializeAuth(),
+      Future.delayed(const Duration(milliseconds: 3000)),
+    ]);
+    
+    if (mounted) {
+      setState(() {
+        _showSplash = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_showSplash) {
+      return const SplashScreen();
+    }
+
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) {
-        // Show loading screen while initializing
-        if (authProvider.authState == AuthState.unknown) {
-          return Scaffold(
-            backgroundColor: AppConstants.backgroundColor,
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: AppConstants.primaryColor,
-                      borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppConstants.primaryColor.withOpacity(0.3),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.savings,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  Text(
-                    'myStash',
-                    style: GoogleFonts.inter(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w800,
-                      color: AppConstants.textPrimary,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Smart savings made simple',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      color: AppConstants.textSecondary,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(AppConstants.primaryColor),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-
         // Navigate based on auth state
         if (authProvider.isAuthenticated) {
           return const HomeScreen();

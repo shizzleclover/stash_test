@@ -1,86 +1,52 @@
-# 💰 myStash - Smart Savings App
+# myStash - Flutter Savings Management App
 
-A beautiful, modern Flutter mobile application for managing personal savings goals. Built with clean architecture principles, smooth animations, and an intuitive user interface.
+**Take-Home Assessment Task: Build a Simple Stash Management App**
 
-![Flutter](https://img.shields.io/badge/Flutter-3.8+-blue.svg)
-![Dart](https://img.shields.io/badge/Dart-3.0+-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+A Flutter mobile application for managing personal savings goals with clean architecture, state management, and local data persistence. This app demonstrates building a lightweight version of myStash focused on viewing and managing "stashes" (individual savings targets).
 
-## 🎯 Overview
+## Task Requirements Implemented
 
-myStash helps users automate savings and manage their finances smartly. Create individual savings targets called "stashes", track your progress, and watch your savings grow with beautiful visual indicators.
+### 1. Authentication (Mocked)
+- Simple login screen with email and password validation
+- Non-empty input validation with routing to home screen
+- No backend integration required
 
-## ✨ Features
+### 2. Home Screen
+- Display list of user stashes with:
+  - Stash Name
+  - Amount Saved
+  - Target Amount
+  - Animated Progress Bar (% towards target)
+- Overview statistics and user greeting
 
-### 🔐 **Authentication**
-- Simple mock authentication system
-- Persistent login state
-- Smooth animated login experience
+### 3. Stash Detail Screen
+- Tap any stash to view detailed information:
+  - Full name, amount saved, target, creation date, and category
+  - Add new contribution functionality
+  - Input contribution amount and update stash progress
+  - Contribution history display
 
-### 🏠 **Dashboard**
-- Personal welcome with user greeting
-- Overview statistics (total saved, targets, progress)
-- Beautiful animated progress indicators
-- Quick access to create new stashes
+### 4. Create New Stash
+- Complete form with:
+  - Name input
+  - Target Amount input
+  - Category selection (dropdown with 10 predefined categories)
+  - Start Date picker
+  - Local storage using Hive database
 
-### 💳 **Stash Management**
-- Create custom savings goals with categories
-- 10 predefined categories with unique colors and icons
-- Set target amounts and start dates
-- Track progress with animated progress bars
-
-### 📊 **Detailed Tracking**
-- Individual stash detail pages
-- Add contributions with real-time updates
-- View contribution history
-- Category-specific theming
-
-### 🎨 **Beautiful UI/UX**
-- Google Fonts (Inter) for premium typography
-- Smooth animations and micro-interactions
-- Material Design 3 principles
-- Professional fintech app aesthetics
-- Responsive design for all screen sizes
-
-### 💾 **Local Storage**
-- Offline-first architecture using Hive
-- Type-safe data persistence
-- No internet connection required
-
-## 🏗 Architecture
-
-Built following **Clean Architecture** principles:
-
-```
-lib/
-├── models/          # Data models with Hive annotations
-├── services/        # Business logic layer
-├── providers/       # State management (Provider pattern)
-├── screens/         # UI screens
-├── widgets/         # Reusable UI components
-└── utils/          # Constants, formatters, helpers
-```
-
-### **Key Architectural Decisions:**
-- **Provider** for state management
-- **Hive** for local database
-- **Google Fonts** for typography
-- **Material Design 3** for consistent UI
-- **Animation Controllers** for smooth transitions
-
-## 🚀 Getting Started
+## Setup Instructions
 
 ### Prerequisites
-- Flutter SDK 3.8+
-- Dart 3.0+
-- Android Studio / VS Code
-- Android/iOS device or simulator
+- Flutter SDK (3.0.0 or later)
+- Dart SDK (2.17.0 or later)
+- Chrome browser (for web development)
+- Android Studio or VS Code with Flutter extensions
 
-### Installation
+### Installation Steps
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/my_stash_app.git
+   git clone <repository-url>
    cd my_stash_app
    ```
 
@@ -89,134 +55,124 @@ lib/
    flutter pub get
    ```
 
-3. **Generate Hive adapters**
+3. **Generate model files**
    ```bash
    flutter packages pub run build_runner build
    ```
 
-4. **Run the app**
+4. **Run the application**
    ```bash
+   # For web
+   flutter run -d chrome
+   
+   # For Android (with device/emulator connected)
    flutter run
+   
+   # For iOS (on macOS with Xcode)
+   flutter run -d ios
    ```
 
-## 📱 How to Use
+### Login Credentials
+The app uses mock authentication. Use any email format and password with 6+ characters to sign in.
 
-### **Login**
-- Use any email address and password (minimum 6 characters)
-- Example: `john@example.com` / `password123`
+## Assumptions Made
 
-### **Create Your First Stash**
-1. Tap the **+** button on the home screen
-2. Enter stash details:
-   - **Name**: e.g., "Emergency Fund", "Vacation"
-   - **Target Amount**: Your savings goal
-   - **Category**: Choose from 10 categories
-   - **Start Date**: When you begin saving
-   - **Initial Amount** (optional): Starting balance
+### Authentication
+- Mock authentication system is sufficient for demonstration
+- Simple validation (non-empty fields, email format, 6+ character password)
+- No actual security implementation required
+- User session persistence across app restarts
 
-### **Add Contributions**
-1. Tap any stash card to view details
-2. Enter contribution amount
-3. Tap "Add" to update your progress
-4. Watch the animated progress bar update!
+### Data Management
+- Local storage using Hive is acceptable (no backend integration)
+- Data persists until app uninstall
+- No data synchronization between devices needed
+- Sample data generation for demonstration purposes
 
-### **Track Progress**
-- View overall statistics on the home screen
-- Individual stash progress in detail view
-- Contribution history with timestamps
+### User Interface
+- Material Design 3 approach for modern fintech aesthetics
+- Responsive design optimized for mobile devices
+- Animations enhance user experience without compromising performance
+- Professional UI polish to simulate real-world fintech experience
 
-## 🛠 Tech Stack
+### Stash Categories
+- Predefined categories are sufficient (Emergency Fund, Vacation, Home, Car, Education, Health, Investment, Wedding, Electronics, Other)
+- Category-specific colors and icons for visual distinction
+- Maximum of 10 categories available in dropdown
 
-| Technology | Purpose |
-|------------|---------|
-| **Flutter** | Cross-platform mobile framework |
-| **Dart** | Programming language |
-| **Provider** | State management |
-| **Hive** | Local NoSQL database |
-| **Google Fonts** | Typography (Inter font) |
-| **Material Design 3** | UI design system |
-| **UUID** | Unique identifier generation |
-| **Intl** | Internationalization & formatting |
+### Financial Data
+- Currency formatting assumes USD ($)
+- No currency conversion needed
+- Basic percentage calculations for progress tracking
+- Decimal precision for monetary values
 
-## 📦 Dependencies
+## Libraries Used
 
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  provider: ^6.1.5           # State management
-  hive: ^2.2.3               # Local database
-  hive_flutter: ^1.1.0       # Flutter integration
-  google_fonts: ^6.2.1       # Typography
-  uuid: ^4.5.1               # ID generation
-  intl: ^0.19.0              # Formatting
-  path_provider: ^2.1.5      # File paths
+### Core Dependencies
+- **flutter**: Core Flutter framework (3.0+)
+- **provider**: State management solution for reactive UI updates
+- **hive**: Lightweight NoSQL database for local data storage
+- **hive_flutter**: Flutter integration for Hive database
 
-dev_dependencies:
-  hive_generator: ^2.0.0     # Code generation
-  build_runner: ^2.4.6       # Build tools
-```
+### Development Dependencies
+- **hive_generator**: Code generation for Hive TypeAdapters
+- **build_runner**: Build system for code generation
 
-## 🎨 Design System
+### UI & Formatting
+- **google_fonts**: Inter font family for premium typography
+- **intl**: Internationalization and date/currency formatting
+- **uuid**: Unique identifier generation for data models
 
-### **Colors**
-- **Primary**: `#6C63FF` (Modern purple)
-- **Success**: `#4CAF50` (Green)
-- **Error**: `#FF5252` (Red)
-- **Background**: `#F8F9FA` (Light gray)
+### Input Handling
+- Built-in Flutter services for input formatters and validation
 
-### **Categories**
-Each category has unique branding:
-- 🚨 Emergency Fund (Red)
-- ✈️ Vacation (Blue)
-- 🏠 Home (Green)
-- 🚗 Car (Purple)
-- 🎓 Education (Yellow)
-- 🏥 Health (Pink)
-- 📈 Investment (Cyan)
-- 💍 Wedding (Orange)
-- 📱 Electronics (Blue Gray)
-- 💰 Other (Brown)
+## Additional Thoughts
 
-### **Typography**
-- **Font**: Inter (Google Fonts)
-- **Weights**: 400 (Regular), 600 (Semi-bold), 800 (Extra-bold)
-- **Optimized** for readability and modern aesthetics
+### Architecture Decisions
+The app follows clean architecture principles with clear separation of concerns:
+- **Models**: Data structures with Hive annotations for persistence
+- **Services**: Business logic for data operations and authentication
+- **Providers**: State management using ChangeNotifier pattern
+- **Screens**: UI presentation layer with responsive design
+- **Widgets**: Reusable UI components with consistent styling
+- **Utils**: Helper functions, constants, and formatting utilities
 
-## 🔮 Future Enhancements
+### State Management Implementation
+- **Provider pattern** chosen for simplicity and Flutter team recommendation
+- Consumer widgets for efficient rebuilding
+- Proper separation of business logic from UI components
+- Loading states and error handling throughout the app
 
-- [ ] **Dark Mode** support
-- [ ] **Biometric Authentication** (fingerprint/face)
-- [ ] **Backup & Sync** with cloud storage
-- [ ] **Savings Insights** and analytics
-- [ ] **Goal Achievement** notifications
-- [ ] **Export Data** functionality
-- [ ] **Multiple Currencies** support
-- [ ] **Savings Challenges** gamification
+### Technical Implementation
+- **Local Storage**: Hive selected for performance, ease of use, and type safety
+- **Animations**: Custom animations implemented for professional user experience
+- **Navigation**: Custom page transitions for smooth screen transitions
+- **Form Validation**: Real-time validation with user feedback
 
-## 🤝 Contributing
+### Performance Considerations
+- Lazy loading of data where appropriate
+- Efficient widget rebuilding using Consumer widgets
+- Animation controllers properly disposed to prevent memory leaks
+- Optimized list rendering for stash cards
+- Staggered animations for better visual flow
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Code Quality
+- Consistent naming conventions throughout the codebase
+- Comprehensive error handling and loading states
+- Type safety with null safety enabled
+- Widget composition over inheritance
+- Separation of business logic from UI components
+- Clean code structure with modular design
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### Bonus Features Implemented
+- **Animations & UI Polish**: Smooth transitions, progress animations, shimmer effects for completed stashes
+- **Good Architecture**: Clean separation of concerns, SOLID principles
+- **Responsive UI**: Adaptive design for different screen sizes
+- **Professional Fintech Experience**: Premium typography, consistent design system, micro-interactions
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Flutter Team** for the amazing framework
-- **Material Design** for design guidelines
-- **Google Fonts** for beautiful typography
-- **Hive** for efficient local storage
-
----
-
-**Built with ❤️ using Flutter**
-
-> *"Smart savings made simple"*
+### Limitations Acknowledged
+- No comprehensive unit tests implemented due to time constraints
+- Limited accessibility features implementation
+- No offline-first data synchronization
+- Mock authentication without security considerations
+- Single currency support only

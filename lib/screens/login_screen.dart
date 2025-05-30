@@ -243,53 +243,6 @@ class _LoginScreenState extends State<LoginScreen>
                       ),
                       
                       const SizedBox(height: AppConstants.paddingLarge),
-                      
-                      // Demo credentials hint
-                      Container(
-                        padding: const EdgeInsets.all(AppConstants.paddingLarge),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppConstants.primaryColor.withOpacity(0.1),
-                              AppConstants.primaryColor.withOpacity(0.05),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(AppConstants.borderRadiusLarge),
-                          border: Border.all(
-                            color: AppConstants.primaryColor.withOpacity(0.2),
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.info_outline,
-                              color: AppConstants.primaryColor,
-                              size: 24,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              'Demo App',
-                              style: GoogleFonts.inter(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppConstants.primaryColor,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Use any email and password (6+ characters) to sign in',
-                              style: GoogleFonts.inter(
-                                fontSize: 14,
-                                color: AppConstants.textSecondary,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),

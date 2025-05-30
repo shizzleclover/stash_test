@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../providers/auth_provider.dart';
 import '../providers/stash_provider.dart';
 import '../utils/constants.dart';
 import '../utils/formatters.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/stash_card.dart';
+import '../utils/page_transitions.dart';
+import '../screens/create_stash_screen.dart';
+import '../screens/stash_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,10 +60,17 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _loadData() async {
-    await context.read<StashProvider>().loadStashes();
-    _headerController.forward();
-    Future.delayed(const Duration(milliseconds: 200), () {
-      _listController.forward();
+    // Use post-frame callback to avoid setState during build
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<StashProvider>().loadStashes();
+      if (mounted) {
+        _headerController.forward();
+        Future.delayed(const Duration(milliseconds: 200), () {
+          if (mounted) {
+            _listController.forward();
+          }
+        });
+      }
     });
   }
 
@@ -78,11 +89,15 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _navigateToCreateStash() {
-    Navigator.of(context).pushNamed('/create-stash');
+    Navigator.of(context).push(
+      CustomPageTransitions.slideUp(const CreateStashScreen()),
+    );
   }
 
   void _navigateToStashDetail(String stashId) {
-    Navigator.of(context).pushNamed('/stash-detail', arguments: stashId);
+    Navigator.of(context).push(
+      CustomPageTransitions.slideRight(StashDetailScreen(stashId: stashId)),
+    );
   }
 
   @override
@@ -352,12 +367,14 @@ class _HomeScreenState extends State<HomeScreen>
               }
 
               return ListView.builder(
-                padding: const EdgeInsets.all(AppConstants.paddingLarge),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: stashProvider.stashes.length,
                 itemBuilder: (context, index) {
                   final stash = stashProvider.stashes[index];
                   return StashCard(
                     stash: stash,
+                    index: index,
                     onTap: () => _navigateToStashDetail(stash.id),
                   );
                 },
