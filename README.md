@@ -62,9 +62,7 @@ A Flutter mobile application for managing personal savings goals with clean arch
 
 4. **Run the application**
    ```bash
-   # For web
-   flutter run -d chrome
-   
+  
    # For Android (with device/emulator connected)
    flutter run
    
@@ -171,8 +169,5 @@ The app follows clean architecture principles with clear separation of concerns:
 - **Professional Fintech Experience**: Premium typography, consistent design system, micro-interactions
 
 ### Limitations Acknowledged
-- No comprehensive unit tests implemented due to time constraints
-- Limited accessibility features implementation
-- No offline-first data synchronization
-- Mock authentication without security considerations
-- Single currency support only
+- Had issues buildinng unit test, resorted to using AI with a tutorial on unit testing
+- Lack of a proper method of making sure the UI is responsive on all screens, usage of screenutil package or mediaquery would have sufficed.
